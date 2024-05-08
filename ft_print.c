@@ -6,89 +6,62 @@
 /*   By: aschmidt <aschmidt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 13:24:28 by aschmidt          #+#    #+#             */
-/*   Updated: 2024/05/08 11:27:44 by aschmidt         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:56:26 by aschmidt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-//#include "libft.h"
 
-int	num_len(int n)
+int     ft_put_hexa(unsigned int n, char format)
 {
-	int	i;
-
-	i = 0;
-	if (n >= 0 && n < 10)
-		return (1);
-	if (n == -2147483648)
-		return (11);
-	if (n < 0)
-	{
-		i = i + 1;
-		n = n * -1;
-	}
-	while (n > 0)
-	{
-		n = n / 10;
-		i++;
-	}
-	return (i);
-}
-
-int	print_d(va_list args, int count)
-{
-	int	dig;
-
-	dig = va_arg(args, int);
-	ft_putnbr_fd(dig, 1);
-	return (count = count + num_len(dig));
-}
-
-int print_c(va_list args, int count)
-{
-	char ch;
-
-	ch = va_arg(args, int);
-	ft_putchar_fd(ch, 1);
-	return (count = count + 1);
-}
-
-int print_str(va_list args, int count)
-{
-	char *str;
-
-	str = va_arg(args, char *);
-	if (str == NULL)
-	{
-		ft_putstr_fd("(null)", 1);
-		return (count = count + 6);
-	}
+        char    *base;
+        char    numchar;
+        int             counter;
+	
+	if (format == 'x') 
+        	base = "0123456789abcdef";
 	else
-		ft_putstr_fd(str, 1);
-	return (count = count + (int)ft_strlen(str));
+		base = "0123456789ABCDEF";
+        counter = 0;
+        if (n > 15)
+        {
+                counter += ft_put_hexa(n / 16, format);
+                counter += ft_put_hexa(n % 16, format);
+        }
+        else
+        {
+                numchar = base[n];
+                write(1, &numchar, 1);
+                counter++;
+        }
+        return (counter);
 }
 
-int print_per(int count)
+int	print_x(va_list args, char format)
 {
-	ft_putchar_fd('%', 1);
-	return (count = count + 1);
+	unsigned long	num;
+
+    num = va_arg(args, unsigned long);
+    return (ft_put_hexa(num, format));
 }
 
-int	formater(char format, va_list args, int count)
+int	formater(char format, va_list args)
 {
 	if (format == '%')
-		count = print_per(count);
+		return (print_per());
 	else if(format == 'd' || format == 'i')
-		count = print_d(args, count);
+		return (print_d(args));
 	else if(format == 'c')
-		count = print_c(args, count);
+		return (print_c(args));
 	else if(format == 's')
-		count = print_str(args, count);
+		return (print_str(args));
 	else if(format == 'u')
-		count = print_u(args, count);
+		return (print_u(args));
 	else if(format == 'p')
-		count = print_p(args, count);
-	return (count);
+		return (print_p(args));
+	else if(format == 'x' || format == 'X')
+		return (print_x(args, format));
+	return (0);
 }
 
 int	ft_printf(const char *fmt_str, ...)
@@ -107,7 +80,7 @@ int	ft_printf(const char *fmt_str, ...)
 	{
 		if (fmt_str[i] == '%')
 		{
-			count = formater(fmt_str[i + 1], args, count);
+			count += formater(fmt_str[i + 1], args);
 			i++;
 		}
 		else

@@ -6,20 +6,49 @@
 /*   By: aschmidt <aschmidt@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:01:17 by aschmidt          #+#    #+#             */
-/*   Updated: 2024/05/07 16:01:43 by aschmidt         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:15:28 by aschmidt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h" 
 
-int	print_p(va_list args, int count)
+int	print_p(va_list args)
 {
-	void *ptr;
-	uintptr_t ptr_num;
+	void		*ptr;
+	uintptr_t	ptr_num;
 
 	ptr = va_arg(args, void *);
-	ptr_num = (uintptr_t)ptr;
-	ft_putstr_fd("0x", 1);
-	printf("el pointe%ld", ptr_num);
-	return (2 + count);
+	if (ptr == NULL)
+	{
+		ft_putstr_fd("(nil)", 1);
+		return (5);
+	}
+	else
+	{
+		ptr_num = (uintptr_t)ptr;
+		ft_putstr_fd("0x", 1);
+		return (2 + ft_put_point(ptr_num));
+	}
+}
+
+int	ft_put_point(uintptr_t n)
+{
+	char	*base;
+	char	numchar;
+	int		counter;
+
+	base = "0123456789abcdef";
+	counter = 0;
+	if (n > 15)
+	{
+		counter += ft_put_point(n / 16);
+		counter += ft_put_point(n % 16);
+	}
+	else
+	{
+		numchar = base[n];
+		write(1, &numchar, 1);
+		counter++;
+	}
+	return (counter);
 }

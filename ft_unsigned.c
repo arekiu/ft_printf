@@ -6,7 +6,7 @@
 /*   By: aschmidt <aschmidt@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 11:34:22 by aschmidt          #+#    #+#             */
-/*   Updated: 2024/05/08 11:35:55 by aschmidt         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:09:20 by aschmidt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int unsig_num_len(unsigned int n)
 	return (i);
 }
 
-int print_u(va_list args, int count)
+int print_u(va_list args)
 {
 	unsigned int	dig;
 
 	dig = va_arg(args, unsigned int);
 	ft_putunsig(dig);
-	return (count = count + unsig_num_len(dig));
+	return (unsig_num_len(dig));
 }

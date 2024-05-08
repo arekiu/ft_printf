@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 SRC	= ft_strlen.c ft_putchar_fd.c ft_putstr_fd.c ft_putnbr_fd.c \
-	  ft_print.c ft_pointer.c ft_unsigned.c
+	  ft_print.c ft_pointer.c ft_unsigned.c ft_printcds.c
 
 OBJS	:= $(SRC:%.c=%.o)
 
