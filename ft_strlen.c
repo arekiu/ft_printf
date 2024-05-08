@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschmidt <aschmidt@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/07 14:25:48 by aschmidt          #+#    #+#             */
-/*   Updated: 2024/05/07 14:28:12 by aschmidt         ###   ########.fr       */
+/*   Created: 2024/04/18 19:56:38 by aschmidt          #+#    #+#             */
+/*   Updated: 2024/05/08 09:09:45 by aschmidt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINT_H
-# define LIBFTPRINTF_H
+#include "ft_printf.h" 
 
-int	ft_printf(const char *fmt_str, ...)
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
 
-#endif
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}
+/*
+int     main(void)
+{
+        printf("%d", (int)ft_strlen("Holischau"));
+}*/
