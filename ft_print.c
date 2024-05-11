@@ -6,60 +6,60 @@
 /*   By: aschmidt <aschmidt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 13:24:28 by aschmidt          #+#    #+#             */
-/*   Updated: 2024/05/08 17:56:26 by aschmidt         ###   ########.fr       */
+/*   Updated: 2024/05/11 10:37:32 by aschmidt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int     ft_put_hexa(unsigned int n, char format)
+int	ft_put_hexa(unsigned int n, char format)
 {
-        char    *base;
-        char    numchar;
-        int             counter;
-	
-	if (format == 'x') 
-        	base = "0123456789abcdef";
+	char	*base;
+	char	numchar;
+	int		counter;
+
+	if (format == 'x')
+		base = "0123456789abcdef";
 	else
 		base = "0123456789ABCDEF";
-        counter = 0;
-        if (n > 15)
-        {
-                counter += ft_put_hexa(n / 16, format);
-                counter += ft_put_hexa(n % 16, format);
-        }
-        else
-        {
-                numchar = base[n];
-                write(1, &numchar, 1);
-                counter++;
-        }
-        return (counter);
+	counter = 0;
+	if (n > 15)
+	{
+		counter += ft_put_hexa(n / 16, format);
+		counter += ft_put_hexa(n % 16, format);
+	}
+	else
+	{
+		numchar = base[n];
+		write(1, &numchar, 1);
+		counter++;
+	}
+	return (counter);
 }
 
 int	print_x(va_list args, char format)
 {
 	unsigned long	num;
 
-    num = va_arg(args, unsigned long);
-    return (ft_put_hexa(num, format));
+	num = va_arg(args, unsigned long);
+	return (ft_put_hexa(num, format));
 }
 
 int	formater(char format, va_list args)
 {
 	if (format == '%')
 		return (print_per());
-	else if(format == 'd' || format == 'i')
+	else if (format == 'd' || format == 'i')
 		return (print_d(args));
-	else if(format == 'c')
+	else if (format == 'c')
 		return (print_c(args));
-	else if(format == 's')
+	else if (format == 's')
 		return (print_str(args));
-	else if(format == 'u')
+	else if (format == 'u')
 		return (print_u(args));
-	else if(format == 'p')
+	else if (format == 'p')
 		return (print_p(args));
-	else if(format == 'x' || format == 'X')
+	else if (format == 'x' || format == 'X')
 		return (print_x(args, format));
 	return (0);
 }
@@ -69,13 +69,12 @@ int	ft_printf(const char *fmt_str, ...)
 	va_list	args;
 	int		i;
 	int		count;
-	
-	if (*fmt_str == '\0')
-		return (0);
+
+	if (!fmt_str)
+		return (-1);
 	i = 0;
 	count = 0;
 	va_start(args, fmt_str);
-
 	while (fmt_str[i] != '\0')
 	{
 		if (fmt_str[i] == '%')
@@ -92,7 +91,6 @@ int	ft_printf(const char *fmt_str, ...)
 	}
 	va_end(args);
 	return (count);
-	//printf("counter: %d", count);
 }
 /*
 int	main(void)

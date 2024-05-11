@@ -6,7 +6,7 @@
 /*   By: aschmidt <aschmidt@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 11:34:22 by aschmidt          #+#    #+#             */
-/*   Updated: 2024/05/08 15:09:20 by aschmidt         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:17:46 by aschmidt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_putunsig(unsigned int n)
 {
-	char numchar;
+	char	numchar;
 
 	if (n > 9)
 	{
@@ -28,13 +28,13 @@ void	ft_putunsig(unsigned int n)
 	}
 }
 
-int unsig_num_len(unsigned int n)
+int	unsig_num_len(unsigned int n)
 {
 	int	i;
 
 	i = 0;
 	if (n == 0)
-		return 1;
+		return (1);
 	while (n > 0)
 	{
 		n /= 10;
@@ -43,7 +43,7 @@ int unsig_num_len(unsigned int n)
 	return (i);
 }
 
-int print_u(va_list args)
+int	print_u(va_list args)
 {
 	unsigned int	dig;
 
